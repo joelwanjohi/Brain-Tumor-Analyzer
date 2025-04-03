@@ -1,0 +1,9 @@
+# This configuration file is used by build_runner to generate the Hive type adapters
+
+targets:
+  $default:
+    builders:
+      hive_generator:
+        options:
+          # Specify options for Hive code generation
+          useTypeIds: true
