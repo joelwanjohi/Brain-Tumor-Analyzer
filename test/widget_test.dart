@@ -10,7 +10,6 @@ import 'package:brain_tumor_analyzer/services/api_service.dart';
 import 'package:brain_tumor_analyzer/services/storage_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
 import 'package:brain_tumor_analyzer/main.dart';
 
 void main() {
@@ -18,19 +17,19 @@ void main() {
     // Create services
     final apiService = ApiService(baseUrl: 'http://10.5.56.233:5000');
     final storageService = StorageService();
-    
+
     // Create controller
     final homeController = HomeController(
       apiService: apiService,
       storageService: storageService,
     );
-    
+
     // Build our app and trigger a frame.
     await tester.pumpWidget(BrainTumorAnalyzerApp(
       homeController: homeController,
-        hasSeenOnboarding: false,
+      hasSeenOnboarding: false,
+      userRole: null, // Add this parameter
     ));
-
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);
