@@ -23,9 +23,8 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> with SingleTicker
   bool _isTyping = false;
   late AnimationController _dotAnimationController;
   
-
-  // Update this line in your PatientHomeScreen
-final String _apiUrl = 'http://10.16.23.227:5001/chat';
+  // Update this line with the correct IP address where your Flask API is running
+  final String _apiUrl = 'http://10.16.23.227:5001/chat';
 
   @override
   void initState() {
@@ -38,19 +37,18 @@ final String _apiUrl = 'http://10.16.23.227:5001/chat';
       duration: const Duration(milliseconds: 1000),
     )..repeat();
     
-// In the initState method, modify the initial message:
-if (_messages.isEmpty) {
-  // Add initial welcome message with no suggestions
-  setState(() {
-    _messages.add({
-      'text': "Hello! I'm your Brain Tumor Assistant.",
-      'isUser': false,
-      'timestamp': DateTime.now().toIso8601String(),
-      // No suggestions array
-    });
-  });
-  _saveMessages();
-}
+
+    if (_messages.isEmpty) {
+      // Add initial welcome message with no suggestions
+      setState(() {
+        _messages.add({
+          'text': "Hello! I'm your Brain Tumor Assistant. How can I help you today?",
+          'isUser': false,
+          'timestamp': DateTime.now().toIso8601String(),
+        });
+      });
+      _saveMessages();
+    }
   }
   
   @override
@@ -128,7 +126,7 @@ if (_messages.isEmpty) {
             'text': data['answer'],
             'isUser': false,
             'timestamp': DateTime.now().toIso8601String(),
-            'suggestions': data['suggestions'],
+            // We're not adding suggestions anymore
           });
           _isTyping = false;
         });
@@ -246,7 +244,6 @@ if (_messages.isEmpty) {
                   final message = _messages[index];
                   final bool isUser = message['isUser'] as bool;
                   final String text = message['text'] as String;
-                  final List<dynamic>? suggestions = message['suggestions'] as List<dynamic>?;
                   
                   return Column(
                     crossAxisAlignment: isUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
@@ -293,10 +290,6 @@ if (_messages.isEmpty) {
                             _buildAvatar(isUser: true),
                         ],
                       ),
-                      
-                      // Display suggestions if available
-                      if (suggestions != null && suggestions.isNotEmpty)
-                        _buildSuggestionChips(suggestions),
                       
                       const SizedBox(height: 16),
                     ],
@@ -435,51 +428,6 @@ if (_messages.isEmpty) {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildSuggestionChips(List<dynamic> suggestions) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 44, top: 10),
-      child: Wrap(
-        spacing: 8,
-        runSpacing: 8,
-        children: suggestions.map((suggestion) {
-          return InkWell(
-            onTap: () => _handleSubmitted(suggestion as String),
-            borderRadius: BorderRadius.circular(18),
-            child: Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 14,
-                vertical: 8,
-              ),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(18),
-                border: Border.all(
-                  color: Colors.green.shade300,
-                  width: 1.5,
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.03),
-                    blurRadius: 3,
-                    offset: const Offset(0, 1),
-                  ),
-                ],
-              ),
-              child: Text(
-                suggestion as String,
-                style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.green.shade700,
-                ),
-              ),
-            ),
-          );
-        }).toList(),
       ),
     );
   }
