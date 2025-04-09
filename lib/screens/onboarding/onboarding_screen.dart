@@ -312,7 +312,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       // Patient role
                       _buildRoleCard(
                         title: "Patient",
-                        description: "Access educational content and chat with our AI assistant",
+                        description: "Access AI assistant Bot",
                         icon: Icons.person_outline,
                         isSelected: _selectedRole == 'patient',
                         onTap: () {
@@ -327,18 +327,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 
                 const SizedBox(height: 16),
                 
-                // Note about changing roles later
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  child: Text(
-                    "You can change your role later in settings",
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey[600],
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
+                // // Note about changing roles later
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: 24),
+                //   child: Text(
+                //     "You can change your role later in settings",
+                //     style: TextStyle(
+                //       fontSize: 14,
+                //       color: Colors.grey[600],
+                //     ),
+                //     textAlign: TextAlign.center,
+                //   ),
+                // ),
                 
                 const Spacer(),
                 
